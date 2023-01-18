@@ -3,6 +3,7 @@ package com.exportImportexcel.controller;
 import com.exportImportexcel.Utils;
 import com.exportImportexcel.model.Employee;
 import com.exportImportexcel.repository.EmployeeRepository;
+import com.exportImportexcel.service.EmpolyeeService;
 import com.exportImportexcel.service.ExcelGenerorUtility;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -25,20 +25,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeController {
     private final EmployeeRepository employeeRepository;
+    private final EmpolyeeService empolyeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, EmpolyeeService empolyeeService) {
         this.employeeRepository = employeeRepository;
-    }
-
-    @GetMapping("/excel")
-    public void getEmployeesDetailInExcel(HttpServletResponse response) throws IOException {
-
-//        DateFormat dateFormat= new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
-//        dateFormat.format(new Date())
-        String fileType = "attachment; filename=employees_details_" + Utils.formatDate(new Date()) + ".xlsx";
-        response.setHeader("Content-Disposition", fileType);
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM.getType());
-        ExcelGenerorUtility.getEmployeesDetailInExcel(response, employeeRepository.findAll());
+        this.empolyeeService = empolyeeService;
     }
 
     @PostMapping("/excel")
@@ -109,6 +100,23 @@ public class EmployeeController {
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/employees")
+    public List<Employee> getAll() {
+        System.out.println("get all : "+empolyeeService.getAllEmployees());
+        return empolyeeService.getAllEmployees();
+    }
+
+    @GetMapping("/excel")
+    public void getEmployeesDetailInExcel(HttpServletResponse response) throws IOException {
+
+//        DateFormat dateFormat= new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+//        dateFormat.format(new Date())
+        String fileType = "attachment; filename=employees_details_" + Utils.formatDate(new Date()) + ".xlsx";
+        response.setHeader("Content-Disposition", fileType);
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM.getType());
+        ExcelGenerorUtility.getEmployeesDetailInExcel(response, employeeRepository.findAll());
     }
    /* public void postDataFromExcel(@RequestParam("file") MultipartFile file) {
 
