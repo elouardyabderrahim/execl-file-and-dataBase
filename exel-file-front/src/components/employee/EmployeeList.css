@@ -1,0 +1,8 @@
+table tbody tr td {
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-style: solid;
+  border-color: black;
+}

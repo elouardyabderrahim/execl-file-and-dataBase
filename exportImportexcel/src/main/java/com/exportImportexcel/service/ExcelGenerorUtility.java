@@ -81,6 +81,8 @@ public class ExcelGenerorUtility {
             }
             //write output to response
             workbook.write(response.getOutputStream());
+            System.out.println(response);
+
         }catch(IOException e){
             e.printStackTrace();
         }}}
