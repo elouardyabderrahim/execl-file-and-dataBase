@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
+@CrossOrigin(value = "*",exposedHeaders ="X-Suggested-Filename")
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
@@ -40,7 +40,7 @@ public class EmployeeController {
             Sheet sheet = workbook.getSheet("itRoad Employees");
             Iterator<Row> rows = sheet.iterator();
 
-            List<Employee> tutorials = new ArrayList<Employee>();
+            List<Employee> employees = new ArrayList<Employee>();
 
             int rowNumber = 0;
             while (rows.hasNext()) {
@@ -90,13 +90,13 @@ public class EmployeeController {
 
                     cellIdx++;
                 }
-                System.out.println(tutorials);
-                tutorials.add(tutorial);
+                System.out.println(employees);
+                employees.add(tutorial);
             }
 
             workbook.close();
 
-            return tutorials;
+            return employees;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
         }
@@ -113,10 +113,13 @@ public class EmployeeController {
 
 //        DateFormat dateFormat= new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
 //        dateFormat.format(new Date())
-        String fileType = "attachment; filename=employees_details_" + Utils.formatDate(new Date()) + ".xlsx";
+        String fileName="employees_details_" + Utils.formatDate(new Date()) + ".xlsx";
+        String fileType = "attachment;" +fileName;
+        response.setHeader("X-Suggested-Filename",fileName);
         response.setHeader("Content-Disposition", fileType);
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM.getType());
         ExcelGenerorUtility.getEmployeesDetailInExcel(response, employeeRepository.findAll());
+        System.out.println(response);
     }
    /* public void postDataFromExcel(@RequestParam("file") MultipartFile file) {
 

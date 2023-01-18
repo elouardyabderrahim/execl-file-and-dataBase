@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAll } from "../../api/excel.api";
+import { getAll } from "../../api/employee.api";
 import "./EmployeeList.css";
 function EmployeeList() {
   const [employeeList, setEmployeeList] = useState([]);
@@ -31,7 +31,6 @@ function EmployeeList() {
               <td>{employee.startsAt}</td>
               <td>{employee.salary}</td>
               <td>{employee.birthDay}</td>
-              <td></td>
             </tr>
           ))}
         </tbody>
