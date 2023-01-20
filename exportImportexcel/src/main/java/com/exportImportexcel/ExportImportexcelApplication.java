@@ -1,26 +1,13 @@
 package com.exportImportexcel;
 
-import com.exportImportexcel.model.Employee;
-import com.exportImportexcel.repository.EmployeeRepository;
-import net.bytebuddy.utility.RandomString;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Date;
 
 @SpringBootApplication
 public class ExportImportexcelApplication {
-
-
-	public static void main(String[] args) {
-		SpringApplication.run(ExportImportexcelApplication.class, args);
-
-
-
-
-}
+    public static void main(String[] args) {
+        SpringApplication.run(ExportImportexcelApplication.class, args);
+    }
 //	@Bean
 //	public CommandLineRunner demoData(EmployeeRepository repo) {
 //		return args -> {
@@ -34,6 +21,6 @@ public class ExportImportexcelApplication {
 //
 //			repo.save(p);}
 //		};
-	}
+}
 
 

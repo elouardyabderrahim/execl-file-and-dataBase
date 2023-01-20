@@ -2,13 +2,25 @@ package com.exportImportexcel.service;
 
 import com.exportImportexcel.Utils;
 import com.exportImportexcel.model.Employee;
+import com.exportImportexcel.repository.EmployeeRepository;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 public class ExcelGenerorUtility {
     public static void getEmployeesDetailInExcel(HttpServletResponse response, List<Employee> employees) throws IOException {
@@ -24,6 +36,7 @@ public class ExcelGenerorUtility {
 
             //    HEADER
             Row row = sheet.createRow(0);
+
             Cell cell = row.createCell(0);
             cell.setCellValue("id");
             cell.setCellStyle(cellStyle);
@@ -83,7 +96,15 @@ public class ExcelGenerorUtility {
             workbook.write(response.getOutputStream());
             System.out.println(response);
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }}}
+        }
+    }
+
+
+
+
+
+
+}
 
